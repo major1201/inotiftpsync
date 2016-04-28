@@ -1,0 +1,10 @@
+---
+inotiftpsync:
+  watch_path: "/tmp"
+  ftp_server: "127.0.0.1"
+  ftp_username: "anonymous"
+  ftp_password: ""
+  ftp_use_ssl: 0
+  ftp_port: 21
+  ftp_root: "/"
+...
