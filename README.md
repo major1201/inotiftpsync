@@ -23,7 +23,6 @@ inotiftpsync:
   ftp_port: 21
   ftp_root: "/"
 ```
-
 2. Run
 ```
 $ python inotiftpsync.py
@@ -36,6 +35,8 @@ $ python inotiftpsync.py
 - PyYAML
 
 ## Known issues
+
+- If you use a command like `mkdir -p dir1/dir2`, you wouldn't get an `IN_CREATE` event for the `dir2`, the `inotify-tools` on Linux is encountering the same issue.
 
 ## License
 
