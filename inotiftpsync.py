@@ -1,3 +1,4 @@
+#! /usr/bin/env python
 # encoding: utf-8
 import os
 import sys
@@ -45,12 +46,17 @@ class _Sync(filewatcher.WatchEventHandler):
                 ftp.delete_file(filename)
 
 
-if __name__ == "__main__":
+def main():
     reload(sys)
     sys.setdefaultencoding("utf-8")
 
+    # init setting
     from utils import setting, num
     setting.load(file(os.path.join(os.path.dirname(__file__), "conf.yaml")))
+
+    # pid file
+    with open(os.path.join(os.path.dirname(__file__), setting.conf.get("system").get("project_name") + ".pid"), 'wb') as pid:
+        pid.write(str(os.getpid()))
 
     conf = setting.conf.get("inotiftpsync")
     _Sync(
@@ -62,3 +68,17 @@ if __name__ == "__main__":
         ftp_port=conf.get("ftp_port"),
         ftp_root=conf.get("ftp_root")
     ).start()
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (KeyboardInterrupt, SystemExit):
+        print("Program Stopped Manually...")
+    finally:
+        # delete pid file
+        try:
+            import os
+            from utils import setting
+            os.remove(os.path.join(os.path.dirname(__file__), setting.conf.get("system").get("project_name") + ".pid"))
+        except: pass

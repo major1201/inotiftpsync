@@ -23,7 +23,14 @@ inotiftpsync:
   ftp_port: 21
   ftp_root: "/"
 ```
-2. Run
+2. Enlarge sysctl for inotify
+```
+$ sudo sysctl fs.inotify.max_user_watches=50000000
+$ sudo sysctl fs.inotify.max_queued_events=327679
+$ sudo sysctl fs.inotify.max_user_instances=128
+$ sudo sysctl -p
+```
+3. Run
 ```
 $ python inotiftpsync.py
 ```

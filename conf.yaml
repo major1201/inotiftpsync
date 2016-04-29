@@ -1,4 +1,11 @@
 ---
+system:
+  project_name: inotiftpsync
+  log_stdout: 1
+  log_file: 0
+  log_file_path:
+  log_level: 10
+
 inotiftpsync:
   watch_path: "/tmp"
   ftp_server: "127.0.0.1"

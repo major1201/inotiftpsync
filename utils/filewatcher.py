@@ -63,8 +63,11 @@ class WatchEventHandler(object):
     def start(self):
 
         from os.path import sep
+        from utils import logger
+        logger.info("Starting adding directories recursively...")
         self._inotify_adapter = InotifyRecursive(self._path_to_watch)
         cookie_cache = {}
+        logger.info("Directories added.")
         for event in self._inotify_adapter.event_gen():
             if self._stop_flag:
                 break
