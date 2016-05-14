@@ -7,7 +7,7 @@ from utils import filewatcher, strings
 
 class _Sync(filewatcher.WatchEventHandler):
 
-    def __init__(self, path, ftp_server, ftp_username="anonymous", ftp_password ="", ftp_use_ssl=False, ftp_port=21, ftp_root="/"):
+    def __init__(self, path, ftp_server, ftp_username="anonymous", ftp_password="", ftp_use_ssl=False, ftp_port=21, ftp_root="/"):
         super(_Sync, self).__init__(path)
 
         from utils.ftputil import FtpUtil
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     finally:
         # delete pid file
         try:
-            import os
             from utils import setting
             os.remove(os.path.join(os.path.dirname(__file__), setting.conf.get("system").get("project_name") + ".pid"))
-        except: pass
+        except:
+            pass
