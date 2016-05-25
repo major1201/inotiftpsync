@@ -1,8 +1,9 @@
 # encoding=utf-8
 import os
 import sys
-import logging, setting, num, strings
+import logging
 import logging.handlers
+from utils import setting, num, strings
 
 conf = setting.conf.get("system")
 

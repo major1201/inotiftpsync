@@ -4,6 +4,7 @@ from inotify.constants import *
 from inotify.adapters import Inotify
 from utils import strings
 
+
 class InotifyRecursive(object):
     def __init__(self, path, mask=IN_ALL_EVENTS, block_duration_s=1):
 

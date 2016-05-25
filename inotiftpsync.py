@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 # encoding: utf-8
 import os
-import sys
 from utils import filewatcher, strings
 
 
@@ -47,15 +46,13 @@ class _Sync(filewatcher.WatchEventHandler):
 
 
 def main():
-    reload(sys)
-    sys.setdefaultencoding("utf-8")
-
     # init setting
     from utils import setting, num
-    setting.load(file(os.path.join(os.path.dirname(__file__), "conf.yaml")))
+    with open(os.path.join(os.path.dirname(__file__), "conf.yaml")) as _f:
+        setting.load(_f)
 
     # pid file
-    with open(os.path.join(os.path.dirname(__file__), setting.conf.get("system").get("project_name") + ".pid"), 'wb') as pid:
+    with open(os.path.join(os.path.dirname(__file__), setting.conf.get("system").get("project_name") + ".pid"), 'w') as pid:
         pid.write(str(os.getpid()))
 
     conf = setting.conf.get("inotiftpsync")
