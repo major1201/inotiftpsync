@@ -40,6 +40,7 @@ $ python inotiftpsync.py
 - Python >= 2.6
 - inotify
 - PyYAML
+- six
 
 ## Known issues
 

@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 # encoding: utf-8
-import os
+from __future__ import division, absolute_import, with_statement, print_function
 from utils import filewatcher, strings
 
 
@@ -46,10 +46,16 @@ class _Sync(filewatcher.WatchEventHandler):
 
 
 def main():
+    import os.path
+
     # init setting
     from utils import setting, num
     with open(os.path.join(os.path.dirname(__file__), "conf.yaml")) as _f:
         setting.load(_f)
+
+    # init logger
+    from utils import logger
+    logger.initialize()
 
     # pid file
     with open(os.path.join(os.path.dirname(__file__), setting.conf.get("system").get("project_name") + ".pid"), 'w') as pid:
@@ -76,6 +82,7 @@ if __name__ == "__main__":
         # delete pid file
         try:
             from utils import setting
+            import os
             os.remove(os.path.join(os.path.dirname(__file__), setting.conf.get("system").get("project_name") + ".pid"))
         except:
             pass

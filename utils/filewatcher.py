@@ -1,8 +1,9 @@
 # encoding: utf-8
+from __future__ import division, absolute_import, with_statement, print_function
 import os
 from inotify.constants import *
 from inotify.adapters import Inotify
-from utils import strings
+from utils import strings, logger
 
 
 class InotifyRecursive(object):
@@ -64,11 +65,8 @@ class WatchEventHandler(object):
     def start(self):
 
         from os.path import sep
-        from utils import logger
-        logger.info("Starting adding directories recursively...")
         self._inotify_adapter = InotifyRecursive(self._path_to_watch)
         cookie_cache = {}
-        logger.info("Directories added.")
         for event in self._inotify_adapter.event_gen():
             if self._stop_flag:
                 break
@@ -108,8 +106,7 @@ class WatchEventHandler(object):
                     if header.mask & IN_MOVE_SELF:
                         self.in_move_self(rela_path)
                 except:
-                    import traceback
-                    print(traceback.format_exc())
+                    logger.error_traceback()
 
     def stop(self):
         self._stop_flag = True

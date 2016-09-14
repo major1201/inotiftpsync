@@ -1,11 +1,14 @@
 # encoding: utf-8
+from __future__ import division, absolute_import, with_statement, print_function
+from utils import num, strings, logger
 
-from utils import num, strings
 
 class FtpFile(object):
 
     def __init__(self, item):
-        assert isinstance(item, str)
+        import six
+
+        assert isinstance(item, six.string_types)
         item_arr = item.split()
         self.permission = item_arr[0]
         self.hard_link_count = num.safe_int(item_arr[1])
@@ -46,9 +49,10 @@ class FtpFile(object):
     def __str__(self):
         return self.__repr__()
 
+
 class FtpUtil(object):
 
-    def __init__(self, server, port=21, username="anonymous", password ="", use_ssl=False):
+    def __init__(self, server, port=21, username="anonymous", password="", use_ssl=False):
         self._server = server
         self._port = port
         self._username = username
@@ -111,8 +115,7 @@ class FtpUtil(object):
             except error_perm:
                 pass
             except:
-                import traceback
-                print(traceback.format_exc())
+                logger.error_traceback()
 
     def rmdir(self, dirname):
         self._ftp.rmd(dirname)
